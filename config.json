@@ -2,5 +2,12 @@
     "title":"SplashedWhite的博客",
     "subTitle":"与天奋斗，与地奋斗，与人奋斗，其乐无穷",
     "avatarUrl":"https://github.githubassets.com/favicons/favicon.svg",
-    "GMEEK_VERSION":"last"
+    "GMEEK_VERSION":"last",
+    "startSite":"22/6/2024",
+    "i18n":"CN",
+    "UTC":8,
+    "themeMode":"manual",
+    "dayTheme":"light",
+    "nightTheme":"dark_colorblind",
+    
 }
