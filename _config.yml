@@ -104,3 +104,9 @@ deploy:
   type: 'git'
   repository: https://github.com/SplashedWhite/splashedwhite.github.io.git
   branch: main
+
+#添加刚刚用npm下载插件的配置在_config文件中 同时实现全局音乐 将asset_inject设置成false
+# aplayer
+aplayer:  
+  meting: true  
+  asset_inject: false
