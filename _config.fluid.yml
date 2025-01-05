@@ -374,6 +374,7 @@ navbar:
     - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
+    - { key: "音乐", link: "/playlist/", icon: "iconfont icon-music" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
     #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
@@ -1130,3 +1131,28 @@ static_prefix:
   hint: https://lib.baomitu.com/hint.css/2.7.0/
 
   moment: https://lib.baomitu.com/moment.js/2.29.4/
+
+#Aplayer
+# APlayer settings
+aplayer:
+  enabled: true
+  id: 3099335800  # 歌单 ID
+  server: netease  # 音乐平台
+  type: playlist   # 类型
+  auto:            # 自动解析音乐链接
+  fixed: true      # 吸底模式
+  mini: true       # 迷你模式
+  autoplay: true   # 自动播放
+  theme: '#607d8b' # 主题颜色
+  loop: 'all'      # 循环播放
+  order: 'random'  # 随机播放
+  preload: 'auto'  # 预载入
+  volume: 0.7      # 默认音量
+  mutex: true      # 互斥，阻止多个播放器同时播放
+  listfolded: true # 列表默认折叠
+  listmaxheight: '340px' # 列表最大高度
+  storagename: 'metingjs' # 存储播放器设置的 localStorage key
+  cdn:
+    css: https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css
+    js: https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js
+    meting: https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js
