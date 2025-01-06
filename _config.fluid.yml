@@ -375,8 +375,8 @@ navbar:
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "音乐", link: "/playlist/", icon: "iconfont icon-music" }
-    - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "关于我", link: "/about/", icon: "iconfont icon-user-fill" }
+    - { key: "友链", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
@@ -514,7 +514,7 @@ index:
 
       # 请求地址
       # Request url
-      url: "https://v1.hitokoto.cn/?c=i"
+      url: "https://v1.hitokoto.cn/?c=i&c=k"
 
       # 请求方法
       # Request method
@@ -1033,6 +1033,24 @@ links:
   # 友链的成员项
   # Member item of page
   items:
+    - {
+      title: "HongTanc Blog",
+      intro: "好友博客",
+      link: "https://hongtanc.github.io/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "一言",
+      intro: "一言有你更精彩",
+      link: "https://hitokoto.cn/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "今日诗词",
+      intro: "古诗词名句综合接口",
+      link: "https://www.jinrishici.com/",
+      avatar: "/img/favicon.png"
+    }
     - {
       title: "Fluid Blog",
       intro: "主题博客",
