@@ -1036,10 +1036,10 @@ links:
   # Member item of page
   items:
     - {
-      title: "HongTanc Blog",
+      title: "HongTANC的博客",
       intro: "好友博客",
       link: "https://hongtanc.github.io/",
-      avatar: "/img/favicon.png"
+      avatar: "/img/HongTANC.jpg"
     }
     - {
       title: "一言",
