@@ -1140,7 +1140,7 @@ aplayer:
   server: netease  # 音乐平台
   type: playlist   # 类型
   auto:            # 自动解析音乐链接
-  fixed: true      # 吸底模式
+  fixed: flase      # 吸底模式
   mini: true       # 迷你模式
   autoplay: true   # 自动播放
   theme: '#607d8b' # 主题颜色
