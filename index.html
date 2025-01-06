@@ -171,7 +171,19 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
               </a>
             </li>
           
@@ -420,7 +432,7 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: 'https://v1.hitokoto.cn/?c=i',
+          url: 'https://v1.hitokoto.cn/?c=i&c=k',
           headers: {},
           dataType: 'json',
           success: function(result) {
@@ -444,7 +456,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://v1.hitokoto.cn/?c=i:', error);
+              console.error('Failed to request https://v1.hitokoto.cn/?c=i&amp;c=k:', error);
             }
             typing(text);
           }
