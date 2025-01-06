@@ -356,7 +356,7 @@ navbar:
   # 导航栏毛玻璃特效，实验性功能，可能会造成页面滚动掉帧和抖动，部分浏览器不支持会自动不生效
   # Navigation bar frosted glass special animation. It is an experimental feature
   ground_glass:
-    enable: false
+    enable: true
 
     # 模糊像素，只能为数字，数字越大模糊度越高
     # Number of blurred pixel. the larger the number, the higher the blur
@@ -453,6 +453,8 @@ footer:
     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
     <i class="iconfont icon-love"></i>
     <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+
+    
   '
 
   # 展示网站的 PV、UV 统计数
@@ -923,7 +925,7 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/default.png
+  banner_img: /img/归档背景.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -934,7 +936,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/分类背景.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -963,7 +965,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/标签背景.jpg
   banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
@@ -980,7 +982,7 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/关于背景.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   avatar: /img/头像.jpg
@@ -995,14 +997,14 @@ about:
 
 
 #---------------------------
-# 自定义页
+# 音乐页，听歌页
 # Custom Page
 #
 # 通过 hexo new page 命令创建的页面
 # Custom Page through `hexo new page`
 #---------------------------
 page:
-  banner_img: /img/default.png
+  banner_img: /img/音乐背景.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -1027,7 +1029,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/default.png
+  banner_img: /img/友链背景.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
