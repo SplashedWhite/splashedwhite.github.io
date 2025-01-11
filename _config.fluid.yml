@@ -830,7 +830,7 @@ valine:
   lang: 'zh-CN' # zh-CN | zh-TW | en | ja
   highlight: false # 代码是否高亮
   recordIP: false # 是否记录评论者IP
-  serverURLs: '' # REST API 服务器地址，国际版不填
+  serverURLs: https://zumknns1.api.lncldglobal.com # REST API 服务器地址，国际版不填
   emojiCDN:
   emojiMaps:
   enableQQ: false
@@ -1085,11 +1085,11 @@ links:
   # 评论插件
   # Comment plugin
   comments:
-    enable: false
+    enable: true
     # 指定的插件，需要同时设置对应插件的必要参数
     # The specified plugin needs to set the necessary parameters at the same time
     # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss
-    type: disqus
+    type: valine
 
 
 #---------------------------
