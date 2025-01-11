@@ -27,7 +27,7 @@
 <meta property="og:description" content="为学无间断，如流水行云，日进而不已也。行百里者半九十">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-05T10:53:00.000Z">
-<meta property="article:modified_time" content="2025-01-06T16:19:04.435Z">
+<meta property="article:modified_time" content="2025-01-11T12:46:41.639Z">
 <meta property="article:author" content="愁如墨">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -301,6 +301,38 @@
 
   </div>
 
+  
+    <!-- Comments -->
+    <article id="comments" lazyload>
+      
+      
+        
+      
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"zuMknNS1J07kdYXJY2Ho1EnQ-MdYXbMMI","appKey":"sE1nzsAd23dBI2ueymsOBHSQ","path":"window.location.pathname","placeholder":"吐槽一哈!!!!（评论仅会显示昵称，不会显示邮箱）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
   
 </article>
 
