@@ -9,7 +9,7 @@ date: 2025-04-10 13:27:41
 
 ## 问题描述
 用Code Runner运行python程序时，输出界面中文显示乱码，如下图所示：
-
+![问题描述](/source/img_9_code_runner/image-3.png)
 ![问题描述](/source/img_9_code_runner/image-3.png)
 但是如果用终端输出，那么中文就是正常的，如下图所示：
 ![alt text](/source/img_9_code_runner/image-6.png)
