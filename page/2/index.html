@@ -20,8 +20,8 @@
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="标签 - 辛弃疾">
-<meta property="og:url" content="http://example.com/tags/%E8%BE%9B%E5%BC%83%E7%96%BE/index.html">
+<meta property="og:title" content="愁如墨">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="愁如墨">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="愁如墨">
@@ -31,7 +31,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>标签 - 辛弃疾 - 愁如墨</title>
+  <title>愁如墨</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -102,7 +102,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 80vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -226,13 +226,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/%E6%A0%87%E7%AD%BE%E8%83%8C%E6%99%AF.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/%E9%A6%96%E9%A1%B5%E8%83%8C%E6%99%AF.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="标签 - 辛弃疾"></span>
+            <span id="subtitle" data-typed-text="落尽梨花春又了。满地残阳，翠色和烟老。"></span>
           
         </div>
 
@@ -256,39 +256,54 @@
     
       <div class="container nopadding-x-md">
         <div id="board"
-          >
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 2 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/01/05/hello-world/" target="_self">
+          Hello World
+        </a>
+      </h2>
+
       
-      <p class="h5">2026</p>
-    
-    <a href="/2026/02/09/10_%E5%8D%83%E7%A7%8B%E5%B2%81%C2%B7%E6%95%B0%E5%A3%B0%E9%B6%97%E9%B4%82/" class="list-group-item list-group-item-action">
-      <time>02-09</time>
-      <div class="list-group-item-title">心似双丝网，中有千千结。——《千秋岁·数声鶗鴂》</div>
-    </a>
-  
-    
-      
-      <p class="h5">2025</p>
-    
-    <a href="/2025/01/06/4_%E4%B8%91%E5%A5%B4%E5%84%BF%20%C2%B7%E4%B9%A6%E5%8D%9A%E5%B1%B1%E9%81%93%E4%B8%AD%E5%A3%81/" class="list-group-item list-group-item-action">
-      <time>01-06</time>
-      <div class="list-group-item-title">少年不识愁滋味，爱上层楼。爱上层楼，为赋新词强说愁。——《丑奴儿 ·书博山道中壁》</div>
-    </a>
-  
-</div>
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/01/05/hello-world/" target="_self">
+        <div>
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-01-05 18:00" pubdate>
+              2025-01-05
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
 
 
 
@@ -403,7 +418,37 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/?c=i&c=k',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'hitokoto'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/?c=i&amp;c=k:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
