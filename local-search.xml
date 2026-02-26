@@ -4,6 +4,45 @@
   
   
   <entry>
+    <title>【记录】便携播放器使用U盘如何调整播放顺序</title>
+    <link href="/2026/02/26/11_%E4%BE%BF%E6%90%BA%E6%92%AD%E6%94%BE%E5%99%A8%E4%BD%BF%E7%94%A8U%E7%9B%98%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%B4%E6%92%AD%E6%94%BE%E9%A1%BA%E5%BA%8F/"/>
+    <url>/2026/02/26/11_%E4%BE%BF%E6%90%BA%E6%92%AD%E6%94%BE%E5%99%A8%E4%BD%BF%E7%94%A8U%E7%9B%98%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%B4%E6%92%AD%E6%94%BE%E9%A1%BA%E5%BA%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 id="便携播放器使用U盘如何调整播放顺序"><a href="#便携播放器使用U盘如何调整播放顺序" class="headerlink" title="便携播放器使用U盘如何调整播放顺序"></a><center>便携播放器使用U盘如何调整播放顺序</center></h1><p><strong>记</strong>：家里有一个带屏幕的便携音响，可以充电然后外出携带，家里老人用它跳广场舞，平时就是把广场舞下载到u盘，然后插上音响就可以跟着跳。但是便携音响的播放顺序和平时手机电脑不太一样。<br>如果按照手机上，通常会是123的顺序去排列，但是在便携播放器中不一定是这样。</p><h4 id="乱序的罪魁祸首："><a href="#乱序的罪魁祸首：" class="headerlink" title="乱序的罪魁祸首："></a>乱序的罪魁祸首：</h4><p>经过查询，大部分便携音响和mp3播放器等设备，都是根据其物理写入顺序来播放的，即下载到u盘的时间先后，与文件名称无关。<br><strong>举个例子</strong>：如果你先往U盘下载2.mp3,过一段时间再去下载1.mp3，那么播放器会先从2开始播放，而不是从1。</p><p><strong>那通用的方法</strong>就是把U盘所有东西都拷贝出来，然后按照你想要的顺序去一个一个重新放进去。但是如果有想放在中间的，那就得重新拷出来，重新放进去。如果是那种放进去之后光听不改的还好，但作为广场舞肯定是隔三岔五下载新的，那就很麻烦。并且还容易出错。</p><h4 id="于是我的思路变成了有没有其他方法调整其U盘的写入顺序。这与U盘有关："><a href="#于是我的思路变成了有没有其他方法调整其U盘的写入顺序。这与U盘有关：" class="headerlink" title="于是我的思路变成了有没有其他方法调整其U盘的写入顺序。这与U盘有关："></a>于是我的思路变成了有没有其他方法调整其U盘的写入顺序。这与U盘有关：</h4><p>便携播放设备支持的u盘通常有两种，即<strong>FAT32</strong>格式和<strong>exFAT</strong>格式，前者较旧，不能存储超过4GB以上的文件，并且最大支持2TB的空间。后者为前者的优化改良，但有的老旧设备不支持。</p><p><strong>首先说FAT32</strong>，因为以该文件系统的U盘，会有一个物理写入顺序的表（FAT表顺序），可以通过一些软件来更改其表的顺序，就类似于目录一样，直接把目录改掉就好了。这里推荐：<strong>DriveSort</strong>，官网如下：<a href="https://www.anerty.net/software/file/DriveSort/">Anerty’s Lair - DriveSort</a>，当然类似软件有很多，可以自行搜索。</p><blockquote><p>[!注意]<br><strong>注意</strong>，<strong>drivesort</strong>只能更改FAT32格式的U盘，并不能更改<strong>exFAT</strong>格式的，因为是因为 FAT32 的底层目录表（Directory Table）就像一张 Excel 表格，软件只要把表格里的行（文件记录）调换一下顺序保存即可，完全不需要触碰真实的文件数据。但是<strong>exFAT</strong>不一样。</p></blockquote><p><strong>再来说exFAT</strong>，微软为了支持超大文件和更快的检索速度，把底层结构搞得比较复杂，<strong>exFAT</strong>的一个文件记录由好几段信息拼凑而来，并且引入了哈希算法，这导致直接修改底层表的风险非常高，稍有不慎就会导致整个U盘的数据损坏。并且由于难度大等原因，很多支持<strong>FAT32</strong>的程序都不支持<strong>exFAT</strong>的更改。</p><h5 id="但是也有一些土办法，当然也很麻烦："><a href="#但是也有一些土办法，当然也很麻烦：" class="headerlink" title="但是也有一些土办法，当然也很麻烦："></a>但是也有一些土办法，当然也很麻烦：</h5><ol><li>在u盘建立临时文件夹，把文件剪切进去，然后在按照顺序拖出来。这样可以避免在电脑和u盘之间的传输时间。</li><li>可以用一些脚本工具和批处理的脚本。具体可以看下面引用。</li><li>可以用一个名为<strong>fatsort</strong>的工具，这个最新版本支持了<strong>exFAT</strong>，但是对于<strong>windows</strong>用户极其不友好，它是纯<strong>Linux &#x2F; Mac</strong> 系统的命令行工具。所以如果是<strong>windows</strong>系统使用的话，那么需要安装<strong>WSL</strong>（可以理解为在windows里面装了linux系统）。</li></ol><p>如果你是<strong>linux</strong>和<strong>mac</strong>系统的，可以去试试<strong>fatsort</strong>，但是如果你是<strong>windows</strong>用户，那我建议是脚本或者是自己去手动建立临时文件夹。脚本可以看我的来源参考，也可以让ai去写。</p><hr><p>网站参考：<br><a href="https://superuser.com/questions/1118190/how-to-sort-files-in-exfat-drive-alphabetically">文件系统——如何按字母顺序排序exFAT驱动器中的文件？- 超级用户</a></p><p><a href="https://dev59.com/superuser/43NA5IYBdhLWcg3wBpHs">如何按字母顺序对exFAT驱动器中的文件进行排序？ filesystems sd-card sorting mp3-player - Dev59</a><br>第二个网站为第一个网站的中文镜像。</p><div class="note note-success">            <p>有点夸张，2026年的问题在2016年就已经有人遇到过了，并且给了解决方案，虽然并不完美。</p>          </div><hr><h6 id="附上Gemini写的代码作为参考：（需提前在文件名前面写上001-002-003等顺序）"><a href="#附上Gemini写的代码作为参考：（需提前在文件名前面写上001-002-003等顺序）" class="headerlink" title="附上Gemini写的代码作为参考：（需提前在文件名前面写上001,002,003等顺序）"></a>附上Gemini写的代码作为参考：（需提前在文件名前面写上001,002,003等顺序）</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sync_to_usb</span>(<span class="hljs-params">source_dir, usb_dir</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    将本地文件夹中的文件，严格按名称顺序，物理拷贝到 U 盘。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 1. 获取本地文件并按名称逻辑排序 (001, 002, 003...)</span><br>    files = os.listdir(source_dir)<br>    files.sort() <span class="hljs-comment"># 确保按您重命名的序号排列</span><br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;准备同步 <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(files)&#125;</span> 个文件到 U 盘...&quot;</span>)<br>    <br>    <span class="hljs-comment"># 2. 检查 U 盘目录是否存在，不存在则创建</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(usb_dir):<br>        os.makedirs(usb_dir)<br><br>    <span class="hljs-comment"># 3. 开始单线程顺序 I/O 写入</span><br>    <span class="hljs-keyword">for</span> filename <span class="hljs-keyword">in</span> files:<br>        src_path = os.path.join(source_dir, filename)<br>        dst_path = os.path.join(usb_dir, filename)<br>        <br>        <span class="hljs-comment"># 跳过子文件夹，只处理文件（扁平化管理）</span><br>        <span class="hljs-keyword">if</span> os.path.isfile(src_path):<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;正在写入: <span class="hljs-subst">&#123;filename&#125;</span> ...&quot;</span>, end=<span class="hljs-string">&quot;&quot;</span>, flush=<span class="hljs-literal">True</span>)<br>            <br>            <span class="hljs-comment"># 使用 copy2 保留文件元数据进行复制</span><br>            shutil.copy2(src_path, dst_path)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot; 完成!&quot;</span>)<br>            <br>            <span class="hljs-comment"># 【核心机制】：强制休眠 0.5 秒</span><br>            <span class="hljs-comment"># 作用：确保底层文件系统的 FAT/exFAT 目录项分配有明确的时间先后顺序，</span><br>            <span class="hljs-comment"># 防止极速小文件拷贝时，操作系统并发 I/O 导致物理顺序乱序。</span><br>            time.sleep(<span class="hljs-number">0.5</span>) <br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n✅ 所有文件已按严格顺序写入 U 盘！&quot;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 配置您的本地源文件夹路径（里面放着改好名的视频）</span><br>    LOCAL_SOURCE_FOLDER = <span class="hljs-string">r&quot;D:\广场舞_准备拷入&quot;</span> <br>    <br>    <span class="hljs-comment"># 配置您的 U 盘路径（建议每次同步前，手动将 U 盘里旧文件全选删除）</span><br>    USB_TARGET_FOLDER = <span class="hljs-string">r&quot;F:\广场舞&quot;</span> <br>    <br>    sync_to_usb(LOCAL_SOURCE_FOLDER, USB_TARGET_FOLDER)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>记录</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>代码</tag>
+      
+      <tag>mp3</tag>
+      
+      <tag>mp4</tag>
+      
+      <tag>播放器</tag>
+      
+      <tag>音响</tag>
+      
+      <tag>u盘</tag>
+      
+      <tag>FAT</tag>
+      
+      <tag>exFAT</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>心似双丝网，中有千千结。——《千秋岁·数声鶗鴂》</title>
     <link href="/2026/02/09/10_%E5%8D%83%E7%A7%8B%E5%B2%81%C2%B7%E6%95%B0%E5%A3%B0%E9%B6%97%E9%B4%82/"/>
     <url>/2026/02/09/10_%E5%8D%83%E7%A7%8B%E5%B2%81%C2%B7%E6%95%B0%E5%A3%B0%E9%B6%97%E9%B4%82/</url>
