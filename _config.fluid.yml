@@ -377,6 +377,13 @@ navbar:
     - { key: "音乐", link: "/playlist/", icon: "iconfont icon-music" }
     - { key: "关于我", link: "/about/", icon: "iconfont icon-user-fill" }
     - { key: "友链", link: "/links/", icon: "iconfont icon-link-fill" }
+    - {
+      key: "工具",
+      icon: "iconfont icon-tools",
+      submenu: [
+        { key: "Steam手续费计算器", link: "/steam-fee-calc/", icon: "iconfont icon-calculator" }
+      ]
+    }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files
