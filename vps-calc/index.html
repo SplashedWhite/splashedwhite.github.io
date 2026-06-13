@@ -19,15 +19,15 @@
   <meta name="author" content="愁如墨">
   <meta name="keywords" content="">
   
-    <meta name="description" content=".steam-calc-wrap {   max-width: 1000px;   margin: 2rem auto;   padding: 0 16px; }  .steam-calc-grid {   display: grid;   grid-template-columns: 1fr 1fr;   gap: 24px; }  .calc-card {   background: #f">
+    <meta name="description" content=".vps-calc-wrap {   max-width: 1000px;   margin: 2rem auto;   padding: 0 16px;   display: flex;   flex-direction: column;   gap: 24px; }  .calc-card {   background: #ffffff;   border-radius: 16px;">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Steam 市场手续费计算器">
-<meta property="og:url" content="http://example.com/steam-fee-calc/index.html">
+<meta property="og:title" content="VPS 剩余价值与溢价计算器">
+<meta property="og:url" content="http://example.com/vps-calc/index.html">
 <meta property="og:site_name" content="愁如墨">
-<meta property="og:description" content=".steam-calc-wrap {   max-width: 1000px;   margin: 2rem auto;   padding: 0 16px; }  .steam-calc-grid {   display: grid;   grid-template-columns: 1fr 1fr;   gap: 24px; }  .calc-card {   background: #f">
+<meta property="og:description" content=".vps-calc-wrap {   max-width: 1000px;   margin: 2rem auto;   padding: 0 16px;   display: flex;   flex-direction: column;   gap: 24px; }  .calc-card {   background: #ffffff;   border-radius: 16px;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-06-13T10:05:03.000Z">
-<meta property="article:modified_time" content="2026-06-13T10:37:00.369Z">
+<meta property="article:published_time" content="2026-06-13T14:23:08.000Z">
+<meta property="article:modified_time" content="2026-06-13T15:07:41.609Z">
 <meta property="article:author" content="愁如墨">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -35,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Steam 市场手续费计算器 - 愁如墨</title>
+  <title>VPS 剩余价值与溢价计算器 - 愁如墨</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -268,7 +268,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Steam 市场手续费计算器"></span>
+            <span id="subtitle" data-typed-text="VPS 剩余价值与溢价计算器"></span>
           
         </div>
 
@@ -298,15 +298,12 @@
 <article class="page-content">
   
 <style>
-.steam-calc-wrap {
+.vps-calc-wrap {
   max-width: 1000px;
   margin: 2rem auto;
   padding: 0 16px;
-}
-
-.steam-calc-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
@@ -332,18 +329,25 @@
   padding-left: 12px;
 }
 
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+
 .input-box {
-  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-box label {
-  display: block;
   margin-bottom: 8px;
   color: #555;
   font-size: 0.95rem;
 }
 
-.input-box input {
+.input-box input,
+.input-box select {
   width: 100%;
   padding: 12px 14px;
   border: 2px solid #e8e8e8;
@@ -353,11 +357,34 @@
   box-sizing: border-box;
   outline: none;
   font-family: inherit;
+  background: #fff;
 }
 
-.input-box input:focus {
+.input-box input:focus,
+.input-box select:focus {
   border-color: #66c0f4;
   box-shadow: 0 0 0 3px rgba(102, 192, 244, 0.15);
+}
+
+.btn-secondary {
+  padding: 0 14px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .result-panel {
@@ -394,8 +421,12 @@
   color: #2da44e;
 }
 
-.result-value.fee {
-  color: #e67e22;
+.result-value.positive {
+  color: #e53e3e;
+}
+
+.result-value.negative {
+  color: #2da44e;
 }
 
 .result-divider {
@@ -411,11 +442,16 @@
   line-height: 1.6;
 }
 
+.rate-tip {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
-  .steam-calc-grid {
+  .input-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
   }
   .calc-card {
     padding: 20px;
@@ -426,112 +462,234 @@
 }
 </style>
 
-<div class="steam-calc-wrap">
-  <div class="steam-calc-grid">
-    <!-- 左侧：挂牌价算实得 -->
-    <div class="calc-card">
-      <h3 class="calc-card-title">已知挂牌价 → 算实际到手</h3>
+<div class="vps-calc-wrap">
+  <!-- 基础配置卡片 -->
+  <div class="calc-card">
+    <h3 class="calc-card-title">基础配置</h3>
+    <div class="input-grid">
       <div class="input-box">
-        <label>挂牌售价（元）</label>
-        <input type="number" id="listPrice" placeholder="请输入市场挂牌价格" step="0.01" min="0">
+        <label>对应周期续费金额</label>
+        <input type="number" id="renewAmount" step="0.01" min="0" placeholder="输入所选付款周期的官方续费价">
       </div>
-      <div class="result-panel">
-        <div class="result-row main">
-          <span class="result-label">实际到手金额</span>
-          <span class="result-value" id="receiveAmount">0.00</span>
-        </div>
-        <div class="result-divider"></div>
-        <div class="result-row">
-          <span class="result-label">总手续费（15%）</span>
-          <span class="result-value fee" id="totalFee">0.00</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">游戏开发商分成（10%）</span>
-          <span class="result-value" id="devFee">0.00</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">Steam 平台分成（5%）</span>
-          <span class="result-value" id="valveFee">0.00</span>
-        </div>
+      <div class="input-box">
+        <label>货币单位</label>
+        <select id="currency">
+          <option value="usd">美元 USD</option>
+          <option value="eur">欧元 EUR</option>
+          <option value="gbp">英镑 GBP</option>
+          <option value="jpy">日元 JPY</option>
+          <option value="hkd">港币 HKD</option>
+          <option value="sgd">新加坡元 SGD</option>
+          <option value="cad">加拿大元 CAD</option>
+          <option value="twd">新台币 TWD</option>
+          <option value="krw">韩元 KRW</option>
+          <option value="cny">人民币 CNY</option>
+        </select>
       </div>
-      <div class="calc-tip">
-        规则说明：手续费基于实得金额计算，总费率 15%<br>
-        公式：实得 = 挂牌价 ÷ 1.15
+      <div class="input-box">
+        <label>付款周期</label>
+        <select id="billingCycle">
+          <option value="15">半月付（15天）</option>
+          <option value="30" selected>月付（30天）</option>
+          <option value="90">季付（90天）</option>
+          <option value="182">半年付（182天）</option>
+          <option value="365">年付（365天）</option>
+          <option value="730">两年付（730天）</option>
+          <option value="1095">三年付（1095天）</option>
+        </select>
+      </div>
+      <div class="input-box">
+        <label>当前汇率（1 原货币 = ? 人民币）</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="number" id="exchangeRate" step="0.0001" min="0" placeholder="可手动修改">
+          <button id="fetchRateBtn" class="btn-secondary">刷新汇率</button>
+        </div>
+        <div class="rate-tip">数据来自 apihz.cn 公开汇率接口，每日更新</div>
       </div>
     </div>
+  </div>
 
-    <!-- 右侧：实得反推挂牌价 -->
-    <div class="calc-card">
-      <h3 class="calc-card-title">已知目标实得 → 反推挂牌价</h3>
+  <!-- 日期与交易卡片 -->
+  <div class="calc-card">
+    <h3 class="calc-card-title">日期与交易信息</h3>
+    <div class="input-grid">
       <div class="input-box">
-        <label>期望到手金额（元）</label>
-        <input type="number" id="targetReceive" placeholder="请输入你想拿到的金额" step="0.01" min="0">
+        <label>计算基准日期（交易日期）</label>
+        <input type="date" id="tradeDate">
       </div>
-      <div class="result-panel">
-        <div class="result-row main">
-          <span class="result-label">需设置的挂牌价</span>
-          <span class="result-value" id="needListPrice">0.00</span>
-        </div>
-        <div class="result-divider"></div>
-        <div class="result-row">
-          <span class="result-label">总手续费（15%）</span>
-          <span class="result-value fee" id="targetTotalFee">0.00</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">游戏开发商分成（10%）</span>
-          <span class="result-value" id="targetDevFee">0.00</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">Steam 平台分成（5%）</span>
-          <span class="result-value" id="targetValveFee">0.00</span>
-        </div>
+      <div class="input-box">
+        <label>服务到期时间</label>
+        <input type="date" id="expireDate">
       </div>
-      <div class="calc-tip">
-        自动补齐手续费，确保你最终拿到指定金额<br>
-        公式：挂牌价 = 目标实得 × 1.15
+      <div class="input-box" style="grid-column: 1 / -1;">
+        <label>交易价格（人民币）</label>
+        <input type="number" id="tradePrice" step="0.01" min="0" placeholder="填写实际成交价格，自动计算溢价/折价">
       </div>
+    </div>
+  </div>
+
+  <!-- 结果卡片 -->
+  <div class="calc-card">
+    <h3 class="calc-card-title">计算结果</h3>
+    <div class="result-panel">
+      <div class="result-row main">
+        <span class="result-label">剩余价值（人民币）</span>
+        <span class="result-value" id="remainValueCny">0.00</span>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-row">
+        <span class="result-label">剩余服务天数</span>
+        <span class="result-value" id="remainDays">0 天</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">剩余价值（原货币）</span>
+        <span class="result-value" id="remainValueOrg">0.00</span>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-row">
+        <span class="result-label">溢价/折价金额</span>
+        <span class="result-value" id="premiumAmount">0.00</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">溢价率</span>
+        <span class="result-value" id="premiumRate">0.00%</span>
+      </div>
+    </div>
+    <div class="calc-tip">
+      计算公式：剩余价值 = 周期续费金额 × (剩余天数 ÷ 付款周期总天数) × 汇率<br>
+      溢价率 = (交易价格 - 剩余价值) ÷ 剩余价值 × 100%；正数为溢价（买贵），负数为折价（买赚）<br>
+      结果仅为理论参考值，实际交易还需考虑平台Push手续费、线路溢价、传家宝属性等因素
     </div>
   </div>
 </div>
 
 <script>
-// 金额格式化，保留两位小数
+// 金额格式化
 function formatMoney(num) {
-  if (isNaN(num) || !isFinite(num) || num <= 0) return '0.00';
+  if (isNaN(num) || !isFinite(num)) return '0.00';
   return num.toFixed(2);
 }
 
-// 正向计算：挂牌价 → 实得
-function calcByListPrice() {
-  const listPrice = parseFloat(document.getElementById('listPrice').value);
-  const receive = listPrice / 1.15;
-  const totalFee = listPrice - receive;
-  const devFee = receive * 0.1;
-  const valveFee = receive * 0.05;
-
-  document.getElementById('receiveAmount').textContent = formatMoney(receive);
-  document.getElementById('totalFee').textContent = formatMoney(totalFee);
-  document.getElementById('devFee').textContent = formatMoney(devFee);
-  document.getElementById('valveFee').textContent = formatMoney(valveFee);
+// 修正时区的日期解析，按本地时间计算天数差
+function getLocalDaysDiff(dateStartStr, dateEndStr) {
+  if (!dateStartStr || !dateEndStr) return 0;
+  const [y1, m1, d1] = dateStartStr.split('-').map(Number);
+  const [y2, m2, d2] = dateEndStr.split('-').map(Number);
+  const start = new Date(y1, m1 - 1, d1);
+  const end = new Date(y2, m2 - 1, d2);
+  const diffTime = end - start;
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+  return Math.max(0, Math.round(diffDays * 100) / 100);
 }
 
-// 反向计算：实得 → 挂牌价
-function calcByReceive() {
-  const targetReceive = parseFloat(document.getElementById('targetReceive').value);
-  const listPrice = targetReceive * 1.15;
-  const totalFee = listPrice - targetReceive;
-  const devFee = targetReceive * 0.1;
-  const valveFee = targetReceive * 0.05;
+// 核心计算函数
+function calculateAll() {
+  const renewAmount = parseFloat(document.getElementById('renewAmount').value) || 0;
+  const cycleDays = parseInt(document.getElementById('billingCycle').value) || 30;
+  const rate = parseFloat(document.getElementById('exchangeRate').value) || 0;
+  const tradeDate = document.getElementById('tradeDate').value;
+  const expireDate = document.getElementById('expireDate').value;
+  const tradePrice = parseFloat(document.getElementById('tradePrice').value) || 0;
 
-  document.getElementById('needListPrice').textContent = formatMoney(listPrice);
-  document.getElementById('targetTotalFee').textContent = formatMoney(totalFee);
-  document.getElementById('targetDevFee').textContent = formatMoney(devFee);
-  document.getElementById('targetValveFee').textContent = formatMoney(valveFee);
+  const remainDays = getLocalDaysDiff(tradeDate, expireDate);
+  const remainOrg = cycleDays > 0 ? renewAmount * (remainDays / cycleDays) : 0;
+  const remainCny = remainOrg * rate;
+
+  let premiumAmount = 0;
+  let premiumRate = 0;
+  if (remainCny > 0 && tradePrice > 0) {
+    premiumAmount = tradePrice - remainCny;
+    premiumRate = (premiumAmount / remainCny) * 100;
+  }
+
+  document.getElementById('remainDays').textContent = remainDays.toFixed(0) + ' 天';
+  document.getElementById('remainValueOrg').textContent = formatMoney(remainOrg);
+  document.getElementById('remainValueCny').textContent = formatMoney(remainCny);
+
+  const premiumAmountEl = document.getElementById('premiumAmount');
+  const premiumRateEl = document.getElementById('premiumRate');
+  
+  const amountText = premiumAmount > 0 ? '+' + formatMoney(premiumAmount) : formatMoney(premiumAmount);
+  const rateText = premiumRate > 0 ? '+' + formatMoney(premiumRate) + '%' : formatMoney(premiumRate) + '%';
+  premiumAmountEl.textContent = amountText;
+  premiumRateEl.textContent = rateText;
+
+  premiumAmountEl.classList.remove('positive', 'negative');
+  premiumRateEl.classList.remove('positive', 'negative');
+  if (premiumAmount > 0) {
+    premiumAmountEl.classList.add('positive');
+    premiumRateEl.classList.add('positive');
+  } else if (premiumAmount < 0) {
+    premiumAmountEl.classList.add('negative');
+    premiumRateEl.classList.add('negative');
+  }
 }
 
-// 绑定实时计算事件
-document.getElementById('listPrice').addEventListener('input', calcByListPrice);
-document.getElementById('targetReceive').addEventListener('input', calcByReceive);
+// 获取实时汇率（使用 apihz.cn 接口）
+async function fetchExchangeRate() {
+  const currency = document.getElementById('currency').value;
+  const btn = document.getElementById('fetchRateBtn');
+  
+  // 人民币直接设为1
+  if (currency === 'cny') {
+    document.getElementById('exchangeRate').value = '1.0000';
+    calculateAll();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '获取中...';
+
+  try {
+    // 接口参数：id/key 固定值，from为原货币（大写），to为CNY，money=1取单单位汇率
+    const fromCode = currency.toUpperCase();
+    const res = await fetch(`https://cn.apihz.cn/api/jinrong/huilv.php?id=88888888&key=88888888&from=${fromCode}&to=CNY&money=1`);
+    const data = await res.json();
+    
+    if (data.code === 200 && data.rate) {
+      document.getElementById('exchangeRate').value = parseFloat(data.rate).toFixed(4);
+      calculateAll();
+    } else {
+      alert('获取汇率失败，请手动输入');
+    }
+  } catch (e) {
+    alert('汇率接口请求失败，请检查网络或手动输入汇率');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '刷新汇率';
+  }
+}
+
+// 初始化日期：默认基准日期为今天，到期日期默认30天后
+function initDate() {
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  document.getElementById('tradeDate').value = todayStr;
+  
+  const expire = new Date(today);
+  expire.setDate(expire.getDate() + 30);
+  const expireStr = `${expire.getFullYear()}-${String(expire.getMonth()+1).padStart(2,'0')}-${String(expire.getDate()).padStart(2,'0')}`;
+  document.getElementById('expireDate').value = expireStr;
+}
+
+// 绑定事件
+document.getElementById('renewAmount').addEventListener('input', calculateAll);
+document.getElementById('currency').addEventListener('change', function() {
+  fetchExchangeRate();
+});
+document.getElementById('billingCycle').addEventListener('change', calculateAll);
+document.getElementById('exchangeRate').addEventListener('input', calculateAll);
+document.getElementById('tradeDate').addEventListener('change', calculateAll);
+document.getElementById('expireDate').addEventListener('change', calculateAll);
+document.getElementById('tradePrice').addEventListener('input', calculateAll);
+document.getElementById('fetchRateBtn').addEventListener('click', fetchExchangeRate);
+
+// 页面初始化
+initDate();
+// 页面加载完成后自动获取一次默认汇率
+window.addEventListener('load', function() {
+  fetchExchangeRate();
+});
 </script>
 
 
