@@ -381,8 +381,10 @@ navbar:
       key: "工具",
       icon: "iconfont icon-books",
       submenu: [
-        { key: "Steam手续费计算器", link: "/steam-fee-calc/", icon: "iconfont icon-pen" }
+        { key: "Steam手续费计算器", link: "/steam-fee-calc/", icon: "iconfont icon-pen" },
+        { key: "VPS剩余价值与溢价计算器", link: "/vps-calc/", icon: "iconfont icon-codepen-fill" }
       ]
+      
     }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
