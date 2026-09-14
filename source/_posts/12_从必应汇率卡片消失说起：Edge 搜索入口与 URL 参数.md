@@ -54,7 +54,7 @@ edge://settings/privacy/services/search/searchEngines
 
 进入地址栏。然后去看`bing`，估计就是这个地方重定向了。
 
-| 搜索引擎 | 快捷方式 | URL                                                          |
+| 搜索引擎 | 快捷方式 | 以%s代替查询的URL                                            |
 | -------- | -------- | ------------------------------------------------------------ |
 | 必应     | bing.com | {bing:cnBaseURL}search?q=%s&{bing:cvid}{bing:msb}{google:assistedQueryStats} |
 
