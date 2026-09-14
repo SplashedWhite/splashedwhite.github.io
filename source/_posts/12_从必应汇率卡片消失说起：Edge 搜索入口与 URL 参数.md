@@ -76,13 +76,13 @@ edge://settings/privacy/services/search/searchEngines
 | -------- | -------- | ------------------------------------------------------------ |
 | 必应www  | bingwww  | https://www.bing.com/search?q=%s&{bing:cvid}{bing:msb}{google:assistedQueryStats} |
 
-为什么要填写https://www.bing.com/而不是{bing:cnBaseURL}，是因为新建立搜索引擎的填写
+为什么要填写https://www.bing.com/ 而不是`{bing:cnBaseURL}`，是因为新建立搜索引擎的填写
 
-{bing:cnBaseURL}的话，前面会自动加上http://，就导致没办法搜索了。所以用https://www.bing.com/来代替。
+`{bing:cnBaseURL}`的话，前面会自动加上`http://`，就导致没办法搜索了。所以用https://www.bing.com/ 来代替。
 
 ##### 搜索网址为什么那么长
 
-然后就引出了下一个问题，就是按理来说搜索只需要https://www.bing.com/search?q=%s就可以了。后面的这些东西是干什么的呢？
+然后就引出了下一个问题，就是按理来说搜索只需要https://www.bing.com/search?q=%s 就可以了。后面的这些东西是干什么的呢？
 
 | 搜索引擎 | 快捷方式 | 以%s代替查询的URL                |
 | -------- | -------- | -------------------------------- |
@@ -90,7 +90,7 @@ edge://settings/privacy/services/search/searchEngines
 
 其实这样写也是可以的。
 
-这些带有花括号 `{...}` 的字符串是 Chromium 内核浏览器（如 Edge、Chrome）的**动态宏占位符**。当你在地址栏敲下回车时，浏览器会自动捕获你当下的输入行为、推荐词点击情况以及会话状态，并将这些占位符替换成具体的跟踪与分析参数。
+这些带有花括号 {...} 的字符串是 Chromium 内核浏览器（如 Edge、Chrome）的**动态宏占位符**。当你在地址栏敲下回车时，浏览器会自动捕获你当下的输入行为、推荐词点击情况以及会话状态，并将这些占位符替换成具体的跟踪与分析参数。
 
 简短链接只保留了最基础的搜索词，而长链接附加了完整的**输入行为遥测与会话跟踪数据**。
 
