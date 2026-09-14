@@ -2,13 +2,14 @@
 title: 从必应汇率卡片消失说起：Edge 搜索入口与 URL 参数
 tags: [代码,bing,bing国际版,URL]
 categories: 记录
+index_img: img_posts/汇率图片.png
 banner_img: /img/分类背景.jpg
 date: 2026-09-14 15:48:00
 ---
 
 # <center>从必应汇率卡片消失说起：Edge 搜索入口与 URL 参数</center>
 
-##### 记录切换地区和对比域名的过程。
+### 记录切换地区和对比域名的过程。
 
 这几天搜索汇率的时候，发现必应下面的汇率小卡片没了，之前一直是有的，结果过了好几天也没回来。
 
@@ -38,7 +39,7 @@ date: 2026-09-14 15:48:00
 
 我先去测试了网址的问题，结果确实如gpt所料，就是这个原因。
 
-##### 怎样恢复地址栏搜索
+### 怎样恢复地址栏搜索
 
 因为我是在这个地址栏搜索的，所以得先看地址栏。
 
@@ -80,7 +81,7 @@ edge://settings/privacy/services/search/searchEngines
 
 `{bing:cnBaseURL}`的话，前面会自动加上`http://`，就导致没办法搜索了。所以用https://www.bing.com/ 来代替。
 
-##### 搜索网址为什么那么长
+### 搜索网址为什么那么长
 
 然后就引出了下一个问题，就是按理来说搜索只需要https://www.bing.com/search?q=%s 就可以了。后面的这些东西是干什么的呢？
 
