@@ -4,6 +4,76 @@
   
   
   <entry>
+    <title>【新人向】ai连接vps的办法</title>
+    <link href="/2026/10/19/14_%E3%80%90%E6%96%B0%E4%BA%BA%E5%90%91%E3%80%91ai%E8%BF%9E%E6%8E%A5vps%E7%9A%84%E5%8A%9E%E6%B3%95/"/>
+    <url>/2026/10/19/14_%E3%80%90%E6%96%B0%E4%BA%BA%E5%90%91%E3%80%91ai%E8%BF%9E%E6%8E%A5vps%E7%9A%84%E5%8A%9E%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【新人向】ai连接vps的办法"><a href="#【新人向】ai连接vps的办法" class="headerlink" title="【新人向】ai连接vps的办法"></a><center>【新人向】ai连接vps的办法</center></h1><p>我看今天有几个帖子在问 AI 怎么连接 VPS，或者怎么让 AI 操作 VPS。一两个月前，我也是在论坛慢慢找帖子，然后才弄成功，于是把大致过程写出来，给大家参考。</p><p>下面以 <strong>Windows 本机通过 SSH 连接 VPS</strong> 为例。</p><p>先说明一下：这里说的 AI，需要具备执行命令的能力，并且能访问本机的 SSH 配置、私钥和服务器网络。</p><h1 id="第一种：在-VPS-上安装-AI-CLI"><a href="#第一种：在-VPS-上安装-AI-CLI" class="headerlink" title="第一种：在 VPS 上安装 AI CLI"></a>第一种：在 VPS 上安装 AI CLI</h1><p>这种办法是在 VPS 上安装并运行 AI 命令行工具，完成相应配置后，让它直接在服务器上执行任务。</p><p>这里主要说第二种，也就是从自己电脑通过 SSH 连接。</p><h1 id="第二种：让本机的-AI-通过-SSH-连接-VPS"><a href="#第二种：让本机的-AI-通过-SSH-连接-VPS" class="headerlink" title="第二种：让本机的 AI 通过 SSH 连接 VPS"></a>第二种：让本机的 AI 通过 SSH 连接 VPS</h1><p>常见的登录方式有两种：密码登录和密钥登录。</p><h2 id="一、密码登录"><a href="#一、密码登录" class="headerlink" title="一、密码登录"></a>一、密码登录</h2><p>先在自己电脑的 PowerShell 中测试：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ssh</span> -p <span class="hljs-number">22</span> 用户名@服务器IP<br></code></pre></td></tr></table></figure><p>把端口、用户名和 IP 换成自己的，按照提示输入服务器上对应用户的登录密码。</p><p>如果手动能登录，再让 AI 使用同样的命令连接。<strong>如果 AI 的执行工具支持口令输入，也可以由它代为输入您提供的密码。</strong> 具体能不能完成，取决于工具支持情况。<br>即：告诉ai通过<code>ssh -p 22 用户名@服务器IP</code>连接，然后告诉它密码即可。</p><p>使用密码登录前提是服务器允许这个用户使用密码登录。比如dmit之类的，上来就是密钥，可以直接移步密钥登录了。并且密钥登录也比较方便，配置完成一次之后，使用起来比较方便。</p><h2 id="二、密钥登录"><a href="#二、密钥登录" class="headerlink" title="二、密钥登录"></a>二、密钥登录</h2><p>如果还没有公钥和私钥的话，可以搜一下，几个命令的事儿。或者生成公钥私钥的网站也有很多（注意安全问题）。</p><p>但是为了安全起见，我建议自己电脑上使用 ssh-keygen 生成。具体步骤可以参考微软的 Windows SSH 密钥管理教程<a href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement">https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement</a> </p><p>或者菜鸟教程中关于ssh密钥的部分，跟着走就行：<a href="https://www.cainiaojc.com/ssh/ssh-key.html">https://www.cainiaojc.com/ssh/ssh-key.html</a> </p><p>（如果你是新手，可以不用上来就设置密码（私钥口令），先保证登录上，再设置口令也来得及，第一次私钥设置可以是明文的，后面再改也可以，先把流程跑通。后续可以再重新生成公钥私钥，或者给私钥加上口令。如果给同一把私钥添加或修改口令，不需要因此重新配置服务器上的公钥。）</p><p>这里假设服务器已经配置好对应的公钥，手里也有用于登录的私钥文件。</p><p>为了以后不用每次输入完整地址，可以给服务器配置一个别名。我以自己的服务器为例。</p><h3 id="1-配置服务器别名"><a href="#1-配置服务器别名" class="headerlink" title="1. 配置服务器别名"></a>1. 配置服务器别名</h3><p>在下面这个文件中添加配置：</p><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">C:\Users\用户名\.ssh\config<br></code></pre></td></tr></table></figure><p>如果 <code>.ssh</code> 文件夹不存在，可以手动建立。</p><p><strong>注意：</strong><code>.ssh</code> <strong>前面带点；</strong><code>config</code> <strong>是文件名，没有</strong> <code>txt</code> <strong>之类的后缀。</strong></p><p>我把私钥放在了 <code>config</code> 旁边：</p><p> <img src="/img_posts/config%E6%96%87%E4%BB%B6.png" alt="image"></p><p><code>config</code> 文件内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Host dmit-vps<br>    HostName VPS的IP<br>    User root<br>    Port 22<br>    IdentityFile C:/Users/zxy83/.ssh/dmit.pem<br>    IdentitiesOnly <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure><p>其中：</p><ul><li><p><code>dmit-vps</code> 是自己给服务器起的别名。</p></li><li><p><code>HostName</code>、<code>User</code>、<code>Port</code> 按实际情况填写。</p></li><li><p><code>IdentityFile</code> 填自己电脑上私钥文件的实际路径。</p></li><li><p><code>IdentitiesOnly yes</code> 限制用于认证的密钥身份，避免额外尝试代理中的其他密钥。代理里如果有与指定身份对应的密钥，仍然可以使用。</p></li></ul><h3 id="2-私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）"><a href="#2-私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）" class="headerlink" title="2. 私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）"></a>2. 私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）</h3><p>私钥也可以设置一个解锁口令，通常叫 <code>passphrase</code>。</p><p>如果私钥设置了口令，连接时可能出现：</p><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-built_in">Enter</span> <span class="hljs-variable">passphrase</span> <span class="hljs-variable">for</span> <span class="hljs-variable">key</span> <span class="hljs-operator">&#x27;</span><span class="hljs-built_in">C</span><span class="hljs-operator">:</span>\<span class="hljs-variable">Users</span>\用户名\<span class="hljs-operator">.</span><span class="hljs-variable">ssh</span>\<span class="hljs-variable">dmit</span><span class="hljs-operator">.</span><span class="hljs-variable">pem</span><span class="hljs-operator">&#x27;:</span><br></code></pre></td></tr></table></figure><p>这时输入的是<strong>私钥的解锁口令</strong>，与服务器用户的登录密码不是一回事。</p><p>加密私钥文件保存的是加密后的私钥，不会附带一份明文口令。输入口令后，SSH 在本机解锁私钥，再用它完成认证。<a href="https://man.openbsd.org/ssh.1#FILES">OpenSSH 说明</a></p><p>如果让 AI 连接，且它使用的工具支持口令输入，也可以让它代为输入您提供的私钥口令。这个过程仍然属于密钥登录。</p><p>如果没有设置私钥口令，或者密钥已经由代理托管，就可能不需要再次输入。下面还有一个减少重复输入的可选办法。</p><h3 id="3-在-PowerShell-中测试"><a href="#3-在-PowerShell-中测试" class="headerlink" title="3. 在 PowerShell 中测试"></a>3. 在 PowerShell 中测试</h3><p>执行：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ssh dmit-vps</span><br></code></pre></td></tr></table></figure><p>如果需要私钥口令，就按提示输入。</p><p>确认能登录后，再对 AI 说：</p><blockquote><p>请通过 <code>ssh dmit-vps</code> 连接到我的 VPS，先做只读检查，检查内容包括……。</p></blockquote><p>后面接上自己想让它检查的问题即可。</p><p>手动测试成功，说明这个 PowerShell 环境能够连接；AI 还需要能访问同样的配置、私钥，并处理可能出现的口令提示。</p><h3 id="可选：不想反复输入私钥口令"><a href="#可选：不想反复输入私钥口令" class="headerlink" title="可选：不想反复输入私钥口令"></a>可选：不想反复输入私钥口令</h3><p>可以使用 <code>ssh-agent</code> 管理密钥：先输入一次口令，把密钥加入代理，之后 SSH 就可以请求代理完成认证。</p><p>在 <strong>Windows 的</strong> <code>**ssh-agent**</code> <strong>已启动</strong>的情况下，执行：</p><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">ssh-add <span class="hljs-string">&quot;C:<span class="hljs-char escape_">\U</span>sers<span class="hljs-char escape_">\用</span>户名<span class="hljs-char escape_">\.</span>ssh<span class="hljs-char escape_">\d</span>mit.pem&quot;</span><br></code></pre></td></tr></table></figure><p>按提示输入私钥口令后，再执行 <code>ssh dmit-vps</code>。只要对应密钥仍在代理中可用，SSH 通常就不再重复询问口令。</p><p>原来的私钥文件仍然保持加密。AI 能否使用这个代理，也取决于它的运行环境。</p><hr><p>我看也有 MJJ 推荐通过插件或者带 AI 功能的 SSH 工具来操作：</p><ul><li><p><a href="https://github.com/caoyiwei850/dsh-ssh-ops">DSH SSH Ops</a>：DeepSeek Harness 的 SSH 运维插件。</p></li><li><p><a href="https://github.com/binaricat/Netcatty">Netcatty</a>：带有 AI 助手的 SSH 客户端，也提供终端和 SFTP 功能。</p></li></ul><p>这些可以作为其他选择，具体使用方法看各自的项目说明。</p><p>——<br>因为我写的想到什么写什么，写的还比较不通顺不够严谨，即<br>本文由我根据自己的使用经历整理，再由 GPT 协助润色和调整排版。如有不准确的地方，欢迎补充、指正。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>记录</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>代码</tag>
+      
+      <tag>vps</tag>
+      
+      <tag>小鸡</tag>
+      
+      <tag>gpt</tag>
+      
+      <tag>codex</tag>
+      
+      <tag>ChatGPT</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>gpt新模型没出现的更新cli即可</title>
+    <link href="/2026/10/19/13_gpt%E6%96%B0%E6%A8%A1%E5%9E%8B%E6%B2%A1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%9B%B4%E6%96%B0cli%E5%8D%B3%E5%8F%AF/"/>
+    <url>/2026/10/19/13_gpt%E6%96%B0%E6%A8%A1%E5%9E%8B%E6%B2%A1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%9B%B4%E6%96%B0cli%E5%8D%B3%E5%8F%AF/</url>
+    
+    <content type="html"><![CDATA[<h1 id="gpt新模型没出现的更新cli即可"><a href="#gpt新模型没出现的更新cli即可" class="headerlink" title="gpt新模型没出现的更新cli即可"></a><center>gpt新模型没出现的更新cli即可</center></h1><p>新模型也是如此</p><p>💦一帖<br>没有gpt6 sol的更新一下cli就好了</p><p>win+R打开cmd：</p><p>cmd命令为：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">codex update</span><br></code></pre></td></tr></table></figure><p>查看版本的命令为：</p><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">codex <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure><p>然后看看版本，实测codex-cli 0.156.1是有的</p><p>mac也是一样的：</p><p><code>Command + 空格</code>，搜索并打开“终端”，输入<code>codex update</code>就行了。</p><p>或者用这个<code>npm install -g @openai/codex@latest</code>也是一样的。</p><p>输入<code>codex update</code>就是执行的<code>npm install -g @openai/codex@latest</code></p><p><code>codex update</code>和<code>npm install -g @openai/codex@latest</code>的效果是一样的。如果<code>codex update</code>不行的话，那就输入npm那个。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>记录</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>代码</tag>
+      
+      <tag>gpt</tag>
+      
+      <tag>codex</tag>
+      
+      <tag>ChatGPT</tag>
+      
+      <tag>ai</tag>
+      
+      <tag>cli</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>从必应汇率卡片消失说起：Edge 搜索入口与 URL 参数</title>
     <link href="/2026/09/14/12_%E4%BB%8E%E5%BF%85%E5%BA%94%E6%B1%87%E7%8E%87%E5%8D%A1%E7%89%87%E6%B6%88%E5%A4%B1%E8%AF%B4%E8%B5%B7%EF%BC%9AEdge%20%E6%90%9C%E7%B4%A2%E5%85%A5%E5%8F%A3%E4%B8%8E%20URL%20%E5%8F%82%E6%95%B0/"/>
     <url>/2026/09/14/12_%E4%BB%8E%E5%BF%85%E5%BA%94%E6%B1%87%E7%8E%87%E5%8D%A1%E7%89%87%E6%B6%88%E5%A4%B1%E8%AF%B4%E8%B5%B7%EF%BC%9AEdge%20%E6%90%9C%E7%B4%A2%E5%85%A5%E5%8F%A3%E4%B8%8E%20URL%20%E5%8F%82%E6%95%B0/</url>

@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="愁如墨">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="【新人向】ai连接vps的办法我看今天有几个帖子在问 AI 怎么连接 VPS，或者怎么让 AI 操作 VPS。一两个月前，我也是在论坛慢慢找帖子，然后才弄成功，于是把大致过程写出来，给大家参考。 下面以 Windows 本机通过 SSH 连接 VPS 为例。 先说明一下：这里说的 AI，需要具备执行命令的能力，并且能访问本机的 SSH 配置、私钥和服务器网络。 第一种：在 VPS 上安装 AI C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【新人向】ai连接vps的办法">
+<meta property="og:url" content="http://example.com/2026/10/19/14_%E3%80%90%E6%96%B0%E4%BA%BA%E5%90%91%E3%80%91ai%E8%BF%9E%E6%8E%A5vps%E7%9A%84%E5%8A%9E%E6%B3%95/index.html">
+<meta property="og:site_name" content="愁如墨">
+<meta property="og:description" content="【新人向】ai连接vps的办法我看今天有几个帖子在问 AI 怎么连接 VPS，或者怎么让 AI 操作 VPS。一两个月前，我也是在论坛慢慢找帖子，然后才弄成功，于是把大致过程写出来，给大家参考。 下面以 Windows 本机通过 SSH 连接 VPS 为例。 先说明一下：这里说的 AI，需要具备执行命令的能力，并且能访问本机的 SSH 配置、私钥和服务器网络。 第一种：在 VPS 上安装 AI C">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img_posts/config%E6%96%87%E4%BB%B6.png">
+<meta property="article:published_time" content="2026-10-19T07:03:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T07:04:01.940Z">
+<meta property="article:author" content="愁如墨">
+<meta property="article:tag" content="代码">
+<meta property="article:tag" content="vps">
+<meta property="article:tag" content="小鸡">
+<meta property="article:tag" content="gpt">
+<meta property="article:tag" content="codex">
+<meta property="article:tag" content="ChatGPT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img_posts/config%E6%96%87%E4%BB%B6.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【新人向】ai连接vps的办法 - 愁如墨</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/aplayer_css/APlayer.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"LJyX86CikcvgcFSKOr6v4iH2-gzGzoHsz","app_key":"aCGZvH87NEaZevHR344gElpy","server_url":"ozED9RQBTSGSvgRVzCahOK5E","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>愁如墨</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/playlist/" target="_self">
+                <i class="iconfont icon-music"></i>
+                <span>音乐</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>工具</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/steam-fee-calc/" target="_self">
+                    <i class="iconfont icon-pen"></i>
+                    <span>Steam手续费计算器</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/vps-calc/" target="_self">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    <span>VPS剩余价值与溢价计算器</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/%E5%88%86%E7%B1%BB%E8%83%8C%E6%99%AF.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【新人向】ai连接vps的办法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-19 15:03" pubdate>
+          2026年10月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          约 14 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【新人向】ai连接vps的办法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="【新人向】ai连接vps的办法"><a href="#【新人向】ai连接vps的办法" class="headerlink" title="【新人向】ai连接vps的办法"></a><center>【新人向】ai连接vps的办法</center></h1><p>我看今天有几个帖子在问 AI 怎么连接 VPS，或者怎么让 AI 操作 VPS。一两个月前，我也是在论坛慢慢找帖子，然后才弄成功，于是把大致过程写出来，给大家参考。</p>
+<p>下面以 <strong>Windows 本机通过 SSH 连接 VPS</strong> 为例。</p>
+<p>先说明一下：这里说的 AI，需要具备执行命令的能力，并且能访问本机的 SSH 配置、私钥和服务器网络。</p>
+<h1 id="第一种：在-VPS-上安装-AI-CLI"><a href="#第一种：在-VPS-上安装-AI-CLI" class="headerlink" title="第一种：在 VPS 上安装 AI CLI"></a>第一种：在 VPS 上安装 AI CLI</h1><p>这种办法是在 VPS 上安装并运行 AI 命令行工具，完成相应配置后，让它直接在服务器上执行任务。</p>
+<p>这里主要说第二种，也就是从自己电脑通过 SSH 连接。</p>
+<h1 id="第二种：让本机的-AI-通过-SSH-连接-VPS"><a href="#第二种：让本机的-AI-通过-SSH-连接-VPS" class="headerlink" title="第二种：让本机的 AI 通过 SSH 连接 VPS"></a>第二种：让本机的 AI 通过 SSH 连接 VPS</h1><p>常见的登录方式有两种：密码登录和密钥登录。</p>
+<h2 id="一、密码登录"><a href="#一、密码登录" class="headerlink" title="一、密码登录"></a>一、密码登录</h2><p>先在自己电脑的 PowerShell 中测试：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ssh</span> -p <span class="hljs-number">22</span> 用户名@服务器IP<br></code></pre></td></tr></table></figure>
+
+<p>把端口、用户名和 IP 换成自己的，按照提示输入服务器上对应用户的登录密码。</p>
+<p>如果手动能登录，再让 AI 使用同样的命令连接。<strong>如果 AI 的执行工具支持口令输入，也可以由它代为输入您提供的密码。</strong> 具体能不能完成，取决于工具支持情况。<br>即：告诉ai通过<code>ssh -p 22 用户名@服务器IP</code>连接，然后告诉它密码即可。</p>
+<p>使用密码登录前提是服务器允许这个用户使用密码登录。比如dmit之类的，上来就是密钥，可以直接移步密钥登录了。并且密钥登录也比较方便，配置完成一次之后，使用起来比较方便。</p>
+<h2 id="二、密钥登录"><a href="#二、密钥登录" class="headerlink" title="二、密钥登录"></a>二、密钥登录</h2><p>如果还没有公钥和私钥的话，可以搜一下，几个命令的事儿。或者生成公钥私钥的网站也有很多（注意安全问题）。</p>
+<p>但是为了安全起见，我建议自己电脑上使用 ssh-keygen 生成。具体步骤可以参考微软的 Windows SSH 密钥管理教程<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement">https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_keymanagement</a> </p>
+<p>或者菜鸟教程中关于ssh密钥的部分，跟着走就行：<a target="_blank" rel="noopener" href="https://www.cainiaojc.com/ssh/ssh-key.html">https://www.cainiaojc.com/ssh/ssh-key.html</a> </p>
+<p>（如果你是新手，可以不用上来就设置密码（私钥口令），先保证登录上，再设置口令也来得及，第一次私钥设置可以是明文的，后面再改也可以，先把流程跑通。后续可以再重新生成公钥私钥，或者给私钥加上口令。如果给同一把私钥添加或修改口令，不需要因此重新配置服务器上的公钥。）</p>
+<p>这里假设服务器已经配置好对应的公钥，手里也有用于登录的私钥文件。</p>
+<p>为了以后不用每次输入完整地址，可以给服务器配置一个别名。我以自己的服务器为例。</p>
+<h3 id="1-配置服务器别名"><a href="#1-配置服务器别名" class="headerlink" title="1. 配置服务器别名"></a>1. 配置服务器别名</h3><p>在下面这个文件中添加配置：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">C:\Users\用户名\.ssh\config<br></code></pre></td></tr></table></figure>
+
+<p>如果 <code>.ssh</code> 文件夹不存在，可以手动建立。</p>
+<p><strong>注意：</strong><code>.ssh</code> <strong>前面带点；</strong><code>config</code> <strong>是文件名，没有</strong> <code>txt</code> <strong>之类的后缀。</strong></p>
+<p>我把私钥放在了 <code>config</code> 旁边：</p>
+<p> <img src="/img_posts/config%E6%96%87%E4%BB%B6.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<p><code>config</code> 文件内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Host dmit-vps<br>    HostName VPS的IP<br>    User root<br>    Port 22<br>    IdentityFile C:/Users/zxy83/.ssh/dmit.pem<br>    IdentitiesOnly <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><p><code>dmit-vps</code> 是自己给服务器起的别名。</p>
+</li>
+<li><p><code>HostName</code>、<code>User</code>、<code>Port</code> 按实际情况填写。</p>
+</li>
+<li><p><code>IdentityFile</code> 填自己电脑上私钥文件的实际路径。</p>
+</li>
+<li><p><code>IdentitiesOnly yes</code> 限制用于认证的密钥身份，避免额外尝试代理中的其他密钥。代理里如果有与指定身份对应的密钥，仍然可以使用。</p>
+</li>
+</ul>
+<h3 id="2-私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）"><a href="#2-私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）" class="headerlink" title="2. 私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）"></a>2. 私钥设置了密码怎么办？（如果你是新手，可以不用一上来就设置密码，先保证登录上跑通流程，再设置密码或者换公私钥也来得及）</h3><p>私钥也可以设置一个解锁口令，通常叫 <code>passphrase</code>。</p>
+<p>如果私钥设置了口令，连接时可能出现：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-built_in">Enter</span> <span class="hljs-variable">passphrase</span> <span class="hljs-variable">for</span> <span class="hljs-variable">key</span> <span class="hljs-operator">&#x27;</span><span class="hljs-built_in">C</span><span class="hljs-operator">:</span>\<span class="hljs-variable">Users</span>\用户名\<span class="hljs-operator">.</span><span class="hljs-variable">ssh</span>\<span class="hljs-variable">dmit</span><span class="hljs-operator">.</span><span class="hljs-variable">pem</span><span class="hljs-operator">&#x27;:</span><br></code></pre></td></tr></table></figure>
+
+<p>这时输入的是<strong>私钥的解锁口令</strong>，与服务器用户的登录密码不是一回事。</p>
+<p>加密私钥文件保存的是加密后的私钥，不会附带一份明文口令。输入口令后，SSH 在本机解锁私钥，再用它完成认证。<a target="_blank" rel="noopener" href="https://man.openbsd.org/ssh.1#FILES">OpenSSH 说明</a></p>
+<p>如果让 AI 连接，且它使用的工具支持口令输入，也可以让它代为输入您提供的私钥口令。这个过程仍然属于密钥登录。</p>
+<p>如果没有设置私钥口令，或者密钥已经由代理托管，就可能不需要再次输入。下面还有一个减少重复输入的可选办法。</p>
+<h3 id="3-在-PowerShell-中测试"><a href="#3-在-PowerShell-中测试" class="headerlink" title="3. 在 PowerShell 中测试"></a>3. 在 PowerShell 中测试</h3><p>执行：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ssh dmit-vps</span><br></code></pre></td></tr></table></figure>
+
+<p>如果需要私钥口令，就按提示输入。</p>
+<p>确认能登录后，再对 AI 说：</p>
+<blockquote>
+<p>请通过 <code>ssh dmit-vps</code> 连接到我的 VPS，先做只读检查，检查内容包括……。</p>
+</blockquote>
+<p>后面接上自己想让它检查的问题即可。</p>
+<p>手动测试成功，说明这个 PowerShell 环境能够连接；AI 还需要能访问同样的配置、私钥，并处理可能出现的口令提示。</p>
+<h3 id="可选：不想反复输入私钥口令"><a href="#可选：不想反复输入私钥口令" class="headerlink" title="可选：不想反复输入私钥口令"></a>可选：不想反复输入私钥口令</h3><p>可以使用 <code>ssh-agent</code> 管理密钥：先输入一次口令，把密钥加入代理，之后 SSH 就可以请求代理完成认证。</p>
+<p>在 <strong>Windows 的</strong> <code>**ssh-agent**</code> <strong>已启动</strong>的情况下，执行：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">ssh-add <span class="hljs-string">&quot;C:<span class="hljs-char escape_">\U</span>sers<span class="hljs-char escape_">\用</span>户名<span class="hljs-char escape_">\.</span>ssh<span class="hljs-char escape_">\d</span>mit.pem&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>按提示输入私钥口令后，再执行 <code>ssh dmit-vps</code>。只要对应密钥仍在代理中可用，SSH 通常就不再重复询问口令。</p>
+<p>原来的私钥文件仍然保持加密。AI 能否使用这个代理，也取决于它的运行环境。</p>
+<hr>
+<p>我看也有 MJJ 推荐通过插件或者带 AI 功能的 SSH 工具来操作：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/caoyiwei850/dsh-ssh-ops">DSH SSH Ops</a>：DeepSeek Harness 的 SSH 运维插件。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/binaricat/Netcatty">Netcatty</a>：带有 AI 助手的 SSH 客户端，也提供终端和 SFTP 功能。</p>
+</li>
+</ul>
+<p>这些可以作为其他选择，具体使用方法看各自的项目说明。</p>
+<p>——<br>因为我写的想到什么写什么，写的还比较不通顺不够严谨，即<br>本文由我根据自己的使用经历整理，再由 GPT 协助润色和调整排版。如有不准确的地方，欢迎补充、指正。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%B0%E5%BD%95/" class="category-chain-item">记录</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BB%A3%E7%A0%81/" class="print-no-link">#代码</a>
+      
+        <a href="/tags/vps/" class="print-no-link">#vps</a>
+      
+        <a href="/tags/%E5%B0%8F%E9%B8%A1/" class="print-no-link">#小鸡</a>
+      
+        <a href="/tags/gpt/" class="print-no-link">#gpt</a>
+      
+        <a href="/tags/codex/" class="print-no-link">#codex</a>
+      
+        <a href="/tags/ChatGPT/" class="print-no-link">#ChatGPT</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【新人向】ai连接vps的办法</div>
+      <div>http://example.com/2026/10/19/14_【新人向】ai连接vps的办法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>愁如墨</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年10月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/19/13_gpt%E6%96%B0%E6%A8%A1%E5%9E%8B%E6%B2%A1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%9B%B4%E6%96%B0cli%E5%8D%B3%E5%8F%AF/" title="gpt新模型没出现的更新cli即可">
+                        <span class="hidden-mobile">gpt新模型没出现的更新cli即可</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"zuMknNS1J07kdYXJY2Ho1EnQ-MdYXbMMI","appKey":"sE1nzsAd23dBI2ueymsOBHSQ","path":"window.location.pathname","placeholder":"吐槽一哈!!!!（评论仅会显示昵称，不会显示邮箱）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://zumknns1.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/aplayer_js/APlayer.min.js"></script>
+<script src="/aplayer_js/Meting.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
